@@ -513,6 +513,65 @@ EC2/instances
 Public IPv4 address:7000
 
 
+#Jenkins-CI/CD(Email)
+cmd
+> ngrok config add-authtoken 2vDDsjBFnwE7d6orXuyZHEN3toS_2fo2ae8eR5qNJsPAJtgfi
+> ngrok.exe http 8080 --- Store the forwarding link
+
+Jenkins
+Create a job
+--Git
+-Repository URL
+-branch
+
+--Triggers
+-GitHub hook trigger for GITScm polling
+
+Apply & Save
+
+GitHub
+repo-settings-webhooks
+
+Add Webhook
+Payload URL = Forwarding URL/github-webhook/
+
+Make changes to a file and commit 
+Open Jenkins, you can see the indication
+
+Email
+Jenkins Settings-> System(Scroll Down)-> E-mail Notification
+SMTP server 
+- smtp.gmail.com
+Advanced 
+- Use SMTP Auth - Username(Your email), Passwords(Create a password with google app passwords using smtp, the resultant is the password)
+- Use SSL
+
+SMTP port
+- 465
+Reply-to address
+- your email
+
+Check the Text one box at the bottom end
+
+(Scroll up) Find Extended E-mail Notification
+SMTP server [ Same as before ]
+SMT Port [ Same as before ]
+
+Advanced
+- Credentials -> Add
+-- Username: email
+-- Password: Copy pas the password from google app
+
+Default Triggers(Select all)
+
+Go to any pipeline
+Add post build action -> Editable environment
+Project Recipient -> email
+Success
++ add -> recipient list
+
+
+
 
 
 
