@@ -1,0 +1,670 @@
+# Maven Project
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>as</groupId>
+  <artifactId>CampusMgmtSyatem</artifactId>
+  <version>1.0</version>
+
+  <packaging>jar</packaging>
+
+  <name>JPROJECT</name>
+  
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>8</release>
+        </configuration>
+      </plugin>
+    </plugins>
+    <finalName>campus-mgmt</finalName>
+  </build>
+</project>
+
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>SE</groupId>
+  <artifactId>Java-Project</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>Java-Project</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.11.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Optionally: parameterized tests support -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.4.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.6.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project> -->
+
+JAVA
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>SE</groupId>
+  <artifactId>MavenWeb</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>MavenWeb Maven Webapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+	<dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>javax.servlet-api</artifactId>
+    	<version>4.0.1</version>
+    	<scope>provided</scope>
+	</dependency>
+	<dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <version>5.0.0</version>
+    <scope>provided</scope>
+</dependency>
+
+  </dependencies>
+  
+  
+
+  <build>
+    <finalName>MavenWeb</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
+-----------------------------------
+##  Docker CLI Commands
+
+>docker pull ubuntu:latest
+>docker run -it -p 9090:80 --name myubuntu1 ubuntu:latest
+# apt update
+# apt install nginx -y
+# cd usr
+# cd share
+# cd nginx
+# cd html
+# apt install nano
+# nano index.html
+--Make changes
+Ctrl+O Enter
+Ctrl+X
+# service nginx start
+# nginx -s reload
+
+## Docker
+
+Using Commit
+> docker run -it -p 9090:80 ubuntu-cont-1 ubuntu:latest
+#apt update
+> docker commit ubuntu-cont-1 ubuntu-img-1
+> docker tag ubuntu-img-1 preetham2929/ubuntu-img-1
+
+Using dockerfile
+> mkdir image-creation
+> cd image-creation
+> notepad Dockerfile
+----------------
+FROM ubuntu:latest
+CMD ["echo","Hello from Preetham"]
+----------------
+> ren Dockerfile.txt Dockerfile
+> docker build -t img-dockerfile-1
+> docker run -it img-dockerfile-1
+> docker tag img-dockerfile-1 preetham2929/img-dockerfile-1
+> docker push preetham2929/img-dockerfile-1
+
+Using Docker Compose File
+> docker run -d -p 8010:80 nginx
+> docker run -d -p 8020:8080 tomee
+-------------------------
+services:
+  web:
+    image: nginx
+    ports:
+      - "8060:80"
+  db:
+    image: tomee
+    ports:
+      - "8050:8080"
+
+> ren docker-compose docker-compose.yml
+> docker-compose up -d
+-------------------------(mysql & wordpress)
+version: "3.8"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql_wp
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wp-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_app
+    depends_on:
+      - db
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - wp-network
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  wp-network:
+-----------------------------------------------(flask & mysql)
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+-------------------------------------------------
+Web
+
+version: "3.9"
+services:
+  app:
+    image: varunmkn/campus-latestv4
+    container_name: campus-contv4
+    ports:
+      - "9090:8080"   # HostPort:ContainerPort, App accessible at http://localhost:9090
+    environment:
+      DB_HOST: db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: mydb
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    container_name: myproject_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+# version: '3.9'
+
+
+# services:
+#   tomcat-app:
+#     image: tomcat:9.0
+#     container_name: tomcat_app
+#     ports:
+#       - "8086:8080"   # Host 8086 maps to container 8080 (Tomcat portal)
+#       - "7007:8080"   # Host 7007 maps to container 8080 (your WAR app)
+#     volumes:
+#       - ./your-app.war:/usr/local/tomcat/webapps/your-app.war
+#     restart: unless-stopped
+
+# services:
+#   tomcat-app:
+#     image: tomcat:9.0
+#     container_name: tomcat_app
+#     ports:
+#       - "8086:8080"   # Host 8086 maps to Tomcat container 8080
+#     volumes:
+#       - ./app1.war:/usr/local/tomcat/webapps/ROOT.war
+#     environment:
+#       - REDIS_HOST=redis
+#       - REDIS_PORT=6379
+#     depends_on:
+#       - redis
+#     restart: unless-stopped
+
+
+#   redis:
+#     image: redis:7.0
+#     container_name: redis
+#     ports:
+#       - "6379:6379"
+#     restart: unless-stopped
+
+
+# services:
+#   foodsystem-app:
+#     image: kumbhambhargavi/APPNAME:latest
+#     container_name: APPNAME-container
+#     ports:
+#       - "7007:8080"  # Host 7007 → Container 8080
+#     depends_on:
+#       - mongodb
+#     environment:
+#       - MONGO_URI=mongodb://mongouser:mongopass@mongodb:27017/foodsystem
+#     restart: unless-stopped
+
+
+#   mongodb:
+#     image: mongo:6
+#     container_name: mongodb
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: mongouser
+#       MONGO_INITDB_ROOT_PASSWORD: mongopass
+#     ports:
+#       - "27017:27017"  # Host 27017 → Container 27017
+#     volumes:
+#       - mongodb-data:/data/db
+#     restart: unless-stopped
+
+# volumes:
+#   mongodb-data:
+
+
+
+# services:
+#   foodsystem-app:
+#     image: kumbhambhargavi/fimage:latest
+#     container_name: -container
+#     ports:
+#       - "7007:8080"
+#     depends_on:
+#       - postgresdb
+#     environment:
+#       - DB_HOST=postgresdb
+#       - DB_PORT=5432
+#       - DB_USER=fuser
+#       - DB_PASSWORD=fpass
+#       - DB_NAME=fappname
+
+#   postgresdb:
+#     image: postgres:15
+#     container_name: postgresdb
+#     environment:
+#       POSTGRES_USER: fuser
+#       POSTGRES_PASSWORD: fpass
+#       POSTGRES_DB: fsystem
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+
+
+
+
+
+
+
+File->import->Git->Projects from Git(with smart Import)->Clone URL->paste the link
+
+Start working on POM.xml file
+
+Right click over the project folder->clean->install->test->build
+
+clean install test->apply->run
+
+
+For WebApp using Tomcat server:
+Download correct Tomcat server requirements zip file from apache website if already not installed.
+Step-by-Step Procedure to Deploy Using the Servers Section in Eclipse
+
+Open the Servers View:
+
+In Eclipse, go to Window > Show View > Other... > Server > Servers > OK. This opens the Servers tab at the bottom of the IDE (if not already visible).
+
+For java
+<plugin>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-maven-plugin</artifactId>
+</plugin>
+
+Add a New Server Runtime Environment (if not already set up):
+
+Go to Window > Preferences > Server > Runtime Environments > Add....
+Expand Apache > Select "Apache Tomcat v9.0" (or v10.0 if using Jakarta EE; v9.0 is fine for standard Servlet/JSP with Java 11).
+Check "Create a new local server" if prompted.
+Click Next > Browse to your extracted Tomcat folder (e.g., C:\Tomcat\apache-tomcat-9.0.x) > Finish.
+
+
+Create a New Server Instance in the Servers View:
+
+In the Servers tab, right-click > New > Server.
+Select Apache > Tomcat v9.0 Server (or your version) > Next.
+If not already set, browse to the Tomcat installation directory > Next > Finish.
+You should now see "Tomcat v9.0 Server at localhost" (or similar) in the Servers tab, with status [Stopped].
+
+
+Configure the Server (Including Port 8080):
+
+Double-click the server entry in the Servers tab to open the editor.
+Under "Server Locations," select "Use Tomcat installation" (this uses your external Tomcat for deployment, similar to dropping WAR in webapps/).
+Under "Ports," verify HTTP/1.1 is set to 8080 (default). If there's a conflict (e.g., another app using 8080), change it to an available port, but keep it as 8080 per your request. Save changes (Ctrl+S).
+If needed, under "Publishing," select "Automatically publish when resources change" for auto-redeploy on code changes.
+
+
+Deploy the Project to the Server:
+
+Right-click the server in the Servers tab > Add and Remove....
+In the dialog, select your project (HospitalMgmtSystem) from "Available" > Add > Finish. This deploys the project in exploded form (equivalent to unpacking the WAR in webapps/).
+Alternatively, right-click your project > Run As > Run on Server > Select the Tomcat server > Next > Ensure the project is added > Finish. This deploys and starts the server if not running.
+
+
+Start the Server:
+
+Right-click the server in the Servers tab > Start (or Debug for debugging mode).
+Watch the Console tab for startup logs. It should show "Server startup in X ms" and no errors. If there are issues (e.g., port conflict), stop the server, adjust ports in the editor, and restart.
+
+
+Access the Application:
+
+Once started, open a browser and go to http://localhost:8080/HospitalMgmtSystem/index.jsp (adjust if you changed the port or context root).
+If it's the root app or no index.jsp loads, check Console for errors or verify deployment in the Servers tab (status sh
+
+
+
+
+---------------------
+
+git init
+
+git add.
+
+git config user.name "name"
+git config user.email "email"
+
+----------------------
+
+Docker
+
+docker ps -a(all ima)
+
+docker image ls
+
+docker login
+
+FROM tomcat:9.0
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+EXPOSE 8080
+CMD ["catalina.sh","run"]
+
+
+docker build -t image_image .
+
+docker run -d -p 8010:8080 --name container image_image
+
+docker tag image_image preetham2929/image_image:latest
+
+docker push preetham2929/image_image:tag
+
+
+docker run -it ubuntu bash
+
+docker stop containerid
+
+docker rm containerid
+
+docker rmi image
+
+Docker Compose
+
+pre-tomcat
+
+version: "3.9"
+services:
+  webapp1:
+    image: image_image
+    container_name: webapp_8090
+    ports:
+      - "8090:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+  webapp2:
+    image: image_image
+    container_name: webapp_8030
+    ports:
+      - "8030:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+version: "3.9"
+services:
+  app:
+    image: myprojectimage
+    container_name: myproject_app
+    ports:
+      - "9090:8080"   # HostPort:ContainerPort, App accessible at http://localhost:9090
+    environment:
+      DB_HOST: db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: mydb
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    container_name: myproject_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"   # Optional, only if you want to connect from host
+
+volumes:
+  db_data:
+
+
+docker-compose up -d
+
+docker-compose ps
+
+docker-compose down
+
+docker-compose up -d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
