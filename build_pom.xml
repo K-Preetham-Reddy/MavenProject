@@ -465,9 +465,52 @@ volumes:
 #       - "5432:5432"
 #     volumes:
 #       - pgdata:/var/lib/postgresql/data
+------------------------------------------------------------------------------------
+
+## Minikube
+> minikube start
+> minikube status
+> kubectl create deployment mynginx --image=nginx
+> kubectl expose deployment mynginx --type=NodePort --port=80
+> kubectl get pods
+> kubectl scale deployment mynginx --replicas=4
+> kubectl get service mynginx
+> kubectl port-forward svc/mynginx 8081:80
+
+> kubectl describe pods
+> kubectl port-forward svc/mynginx 8081:80
 
 
+## AWS
+Dashboard - AWS Academy Learner Lab
+Modules - AWS Academy Learner Lab - Start Lab
+EC2 - Launch Instance
+Name: 
+Ubuntu
+Instance Type: t2.micro
+create-new key pair - Just the key pair name - store it in Desktop
+Allow SSH traffic from
+Allow HTTP
+Allow HTTPS
+Edit(In network settings itself) - Add security group rule - port range(port number(7000)) , Source:  0.0.0.0/0
 
+Launch Instance
+
+EC2/instance
+Check the box of the instance and then click connect
+Move to SSH client
+copy ---> ssh -i "PR.......
+go to cmd, then to where you downloaded, paste it
+type----------
+sudo apt update
+sudo apt-get install docker.io
+git clone the AWS repo of varun
+cd AWS-practice
+sudo docker build -t aws-img .
+sudo docker run -d -p 7000:80 aws-img
+
+EC2/instances
+Public IPv4 address:7000
 
 
 
