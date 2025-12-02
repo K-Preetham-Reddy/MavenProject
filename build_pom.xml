@@ -570,9 +570,59 @@ Project Recipient -> email
 Success
 + add -> recipient list
 
+## Jenkins Automation
+------
+Java
+New Item->Maven_Java->Freestyle project
+Source Code Management -> Git -> URL in git
+Build Steps
+1.)Invoke top-level Maven targets -> clean
+2.)Invoke top-level Maven targets -> install
+Post build actions
+1.) Archive the artifacts -> **/*
+2.) Build other projects -> Maven_Java_Test
+
+New Item->Maven_Java_Test->Freestyle project
+Source Code Management -> none
+Environment -> delete workspace before build starts
+Build Steps
+1.)Copy artifacts from another project ->ProjectName: Maven_Java, Artifacts to copy: **/*
+2.) Invoke top-level Maven targets -> test // Not necessary
+Post build actions 
+1.) archive the artifacts -> **/*
+-------
+Web
+New Item->Maven_Web_Build->Freestyle project
+Source Code Management -> Git -> URL in git
+Build Steps
+1.)Invoke top-level Maven targets -> clean
+2.)Invoke top-level Maven targets -> install
+Post build actions
+1.) Archive the artifacts -> **/*
+2.) Build other projects -> Maven_Java_Test
+
+New Item->Maven_Web_Test->Freestyle project
+Source Code Management -> none
+Environment -> delete workspace before build starts
+Build Steps
+1.)Copy artifacts from another project ->ProjectName: Maven_Web_Build, Artifacts to copy: **/*
+2.) Invoke top-level Maven targets -> test // Not necessary
+Post build actions 
+1.) archive the artifacts -> **/*
+2.) build other projects -> maven_web_deploy
+
+Pipeline View
+Layout->Based on upstream/downstream relationship
+Upstream/downstream config -> Select initial job: Maven_Web_Build
 
 
-
+New Item->Maven_Web_Deploy->Freestyle project
+Source Code Management -> none
+Environment -> delete workspace before build starts
+Build Steps
+1.)Copy artifacts from another project ->ProjectName: Maven_Web_Test, Artifacts to copy: **/*
+Post Build Actions
+1.)Deploy war/ear to a container-> WAR/EAR files: **/*.war, Context Path: webpath, give credentials(admin/admin) and tomcat URL
 
 
 File->import->Git->Projects from Git(with smart Import)->Clone URL->paste the link
