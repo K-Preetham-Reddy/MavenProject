@@ -805,8 +805,266 @@ docker-compose down
 
 docker-compose up -d
 
+---------------------------------
+Java
+pipeline {
+  agent any
 
+  options {
+    timeout(time: 30, unit: 'MINUTES')
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+    timestamps()
+  }
 
+  environment {
+    MAVEN_OPTS = '-Xmx1024m'
+  }
+
+  parameters {
+    string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch to build')
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        // Use the git step (works for "Pipeline script" jobs). No "checkout scm" here.
+        git url: 'https://github.com/K-Preetham-Reddy/correct-Maven-java-app.git', branch: "${params.BRANCH}"
+      }
+    }
+
+    stage('Detect Maven') {
+      steps {
+        script {
+          def unix = isUnix()
+          // mvnw on Unix is 'mvnw', on Windows is 'mvnw.cmd'
+          def hasMvnw = fileExists('mvnw') || (!unix && fileExists('mvnw.cmd'))
+          def hasMvn = unix ? (sh(script: 'command -v mvn >/dev/null 2>&1', returnStatus: true) == 0)
+                            : (bat(script: 'where mvn', returnStatus: true) == 0)
+          def hasDocker = unix ? (sh(script: 'command -v docker >/dev/null 2>&1', returnStatus: true) == 0)
+                               : (bat(script: 'where docker', returnStatus: true) == 0)
+
+          echo "agent.isUnix=${unix}, mvnw=${hasMvnw}, mvn=${hasMvn}, docker=${hasDocker}"
+
+          if (hasMvnw) {
+            env.MVN_CMD = unix ? './mvnw -B' : 'mvnw.cmd -B'
+            env.NEEDS_BAT = unix ? 'false' : 'true'
+            env.DOCKER_FALLBACK = 'false'
+            echo "Will use repository Maven wrapper."
+          } else if (hasMvn) {
+            env.MVN_CMD = 'mvn -B'
+            env.NEEDS_BAT = unix ? 'false' : 'true'
+            env.DOCKER_FALLBACK = 'false'
+            echo "Will use system mvn."
+          } else if (unix && hasDocker) {
+            // Only use Docker fallback on Unix agents (docker.image().inside is not supported on Windows nodes)
+            env.MVN_CMD = ''
+            env.NEEDS_BAT = 'false'
+            env.DOCKER_FALLBACK = 'true'
+            echo "No mvnw/mvn found; will run Maven inside docker:maven image (Unix agent)."
+          } else {
+            error """
+No way to run Maven found on this agent.
+Either:
+ - Add the Maven Wrapper (mvnw / mvnw.cmd) to the repository,
+ - Install Maven (mvn) on the agent, OR
+ - Run this job on a Unix agent with Docker available (so the pipeline can run Maven inside the official maven Docker image).
+"""
+          }
+        }
+      }
+    }
+
+    stage('Build (compile & test)') {
+      steps {
+        script {
+          if (env.DOCKER_FALLBACK == 'true') {
+            docker.image('maven:3.8.8-openjdk-11').inside('-v $HOME/.m2:/root/.m2') {
+              sh 'mvn -B clean test'
+            }
+          } else if (env.NEEDS_BAT == 'true') {
+            bat "${env.MVN_CMD} clean test"
+          } else {
+            sh "${env.MVN_CMD} clean test"
+          }
+        }
+      }
+      post {
+        always {
+          // publish test results if present; allowEmptyResults true avoids failure if none exist
+          junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+        }
+      }
+    }
+
+    stage('Package') {
+      steps {
+        script {
+          if (env.DOCKER_FALLBACK == 'true') {
+            docker.image('maven:3.8.8-openjdk-11').inside('-v $HOME/.m2:/root/.m2') {
+              sh 'mvn -B package'
+            }
+          } else if (env.NEEDS_BAT == 'true') {
+            bat "${env.MVN_CMD} package"
+          } else {
+            sh "${env.MVN_CMD} package"
+          }
+        }
+        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "Build succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+    }
+    failure {
+      echo "Build failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+    }
+    always {
+      cleanWs()
+    }
+  }
+}
+-----------------
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout & Clean') {
+      steps {
+        script {
+          // checkout the repo (works for "Pipeline script" jobs)
+          git url: 'https://github.com/K-Preetham-Reddy/correct-Maven-java-app.git', branch: 'main'
+
+          // run mvn clean (use mvnw if present)
+          if (isUnix()) {
+            if (fileExists('mvnw')) {
+              sh './mvnw -B clean'
+            } else {
+              sh 'mvn -B clean'
+            }
+          } else {
+            // Windows agent
+            if (fileExists('mvnw.cmd')) {
+              bat 'mvnw.cmd -B clean'
+            } else {
+              bat 'mvn -B clean'
+            }
+          }
+        }
+      }
+    }
+
+    stage('Install') {
+      steps {
+        script {
+          // run install but skip tests here so tests run in the next stage
+          if (isUnix()) {
+            if (fileExists('mvnw')) {
+              sh './mvnw -B -DskipTests=true install'
+            } else {
+              sh 'mvn -B -DskipTests=true install'
+            }
+          } else {
+            if (fileExists('mvnw.cmd')) {
+              bat 'mvnw.cmd -B -DskipTests=true install'
+            } else {
+              bat 'mvn -B -DskipTests=true install'
+            }
+          }
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        script {
+          if (isUnix()) {
+            if (fileExists('mvnw')) {
+              sh './mvnw -B test'
+            } else {
+              sh 'mvn -B test'
+            }
+          } else {
+            if (fileExists('mvnw.cmd')) {
+              bat 'mvnw.cmd -B test'
+            } else {
+              bat 'mvn -B test'
+            }
+          }
+        }
+      }
+      post {
+        always {
+          // publish JUnit results if present
+          junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "Pipeline succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+    }
+    failure {
+      echo "Pipeline failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+    }
+    always {
+      cleanWs()
+    }
+  }
+}
+-------------------------------------------------------------------
+Web
+
+node {
+    timeout(time: 30, unit: 'MINUTES') {
+        stage('Checkout') {
+            git branch: 'main', url: 'https://github.com/K-Preetham-Reddy/correct-maven-web-app.git'
+        }
+        stage('Build') {
+            try {
+                docker.image('maven:3.9.4-eclipse-temurin-17').inside("-v ${env.WORKSPACE}/.m2:/root/.m2") {
+                    sh 'mvn -B clean package'
+                }
+            } catch (err) {
+                echo "Docker build failed or Docker not available: ${err}"
+                echo "Falling back to local Maven on the agent."
+                stage('Build (local)') {
+                    if (isUnix()) {
+                        sh '''
+if ! command -v mvn >/dev/null 2>&1; then
+  echo "ERROR: Maven is not installed on this Jenkins agent and Docker build failed."
+  exit 1
+fi
+mvn -B clean package
+'''
+                    } else {
+                        bat '''
+where mvn >nul 2>&1
+if errorlevel 1 (
+  echo ERROR: Maven is not installed on this Jenkins agent and Docker build failed.
+  exit /b 1
+)
+mvn -B clean package
+'''
+                    }
+                }
+            }
+        }
+        stage('Publish test results') {
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml, **/target/failsafe-reports/*.xml'
+        }
+        stage('Archive artifacts') {
+            archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar, **/target/**/*.zip', allowEmptyArchive: true
+        }
+        stage('Finish') {
+            echo "Pipeline finished. Artifacts archived (if any)."
+        }
+    }
+}
 
 
 
